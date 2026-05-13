@@ -1,7 +1,7 @@
 
 
 from data.data import UserData
-from helpers.api_requests import post_create_user, post_login_user, post_create_order
+from helpers.api_requests import post_create_user, post_login_user, post_create_order, delete_user
 
 
 
@@ -25,3 +25,8 @@ def get_user_token():
     if response.status_code == 200:
         return response.json().get("accessToken")
     return None
+
+def delete_user_by_token(access_token):
+
+    response = delete_user(access_token)
+    return response

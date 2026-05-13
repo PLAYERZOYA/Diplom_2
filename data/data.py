@@ -7,6 +7,7 @@ class Urls:
     LOGIN_USER = '/api/auth/login'
     CREATE_ORDER = '/api/orders'
     GET_INGREDIENTS = '/api/ingredients'
+    DEL_USER = '/api/auth/user'
 
 
 class UserData:

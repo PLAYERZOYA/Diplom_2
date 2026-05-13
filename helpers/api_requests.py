@@ -23,3 +23,9 @@ def post_create_order(order_data, access_token=None):
     
     response = requests.post(url, json=order_data, headers=headers)
     return response
+
+
+def delete_user(access_token):
+    url = f"{Urls.BASE_URL}{Urls.DEL_USER}"
+    headers = {"Authorization": access_token}
+    return requests.delete(url, headers=headers)

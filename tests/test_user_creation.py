@@ -8,23 +8,26 @@ class TestUserCreation:
     
     @allure.title('Создание уникального пользователя')
     def test_create_unique_user_status_code_200(self, generate_user_data):
-   
-        response = create_user(generate_user_data)
         
-        assert response.status_code == 200
+        with allure.step("Создание уникального пользователя"):
+            response = create_user(generate_user_data)
         
-    
+        with allure.step("Проверка статус кода"):
+            assert response.status_code == 200
+        
     @allure.title('Создание уже существующего пользователя')
     def test_create_existing_user_response_403(self):
-
-        response = create_user(UserData.EXISTING_USER)
         
-        assert response.status_code == 403
+        with allure.step("Создание уже существующего пользователя"):
+            response = create_user(UserData.EXISTING_USER)
         
-        response_json = response.json()
-        assert response_json["success"] is False
-        assert response_json["message"] == "User already exists"
-
+        with allure.step("Проверка статус кода"):
+            assert response.status_code == 403
+        
+        with allure.step("Проверка тела ответа"):
+            response_json = response.json()
+            assert response_json["success"] is False
+            assert response_json["message"] == "User already exists"
 
     @allure.title('Создание пользователя с незаполненным обязательным полем')
     @pytest.mark.parametrize("invalid_user", [
@@ -33,11 +36,14 @@ class TestUserCreation:
         UserData.USER_WITHOUT_NAME
     ])
     def test_create_user_missing_required_field_response_403(self, invalid_user):
-
-        response = create_user(invalid_user)
         
-        assert response.status_code == 403
+        with allure.step("Создание пользователя без обязательного поля"):
+            response = create_user(invalid_user)
         
-        response_json = response.json()
-        assert response_json["success"] is False
-        assert response_json["message"] == "Email, password and name are required fields"
+        with allure.step("Проверка статус кода"):
+            assert response.status_code == 403
+        
+        with allure.step("Проверка сообщения об ошибке"):
+            response_json = response.json()
+            assert response_json["success"] is False
+            assert response_json["message"] == "Email, password and name are required fields"
